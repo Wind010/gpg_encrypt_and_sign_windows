@@ -3,14 +3,14 @@
 Expected use on Windows OS.
 
 * Generates a GPG/PGP public/private key pair.
-* Encrypts and Signs a directory
+* Encrypts and Signs all files in specified directory
+* Exports the public key to specified directory with specified filename.
 
 ## Requirements
 Requires https://gpg4win.org/download.html
 
 ## Usage
-
-Will prompt for password if no existing matching secret/private key with email/name exists.
+Will prompt for password if no existing matching secret/private key with email/name exists to create a new key pair.
 
 ```powershell
 .\gpg_encrypt_and_sign.ps1

@@ -37,19 +37,22 @@ function Remove-GPGKeyPairs {
 $keyFingerPrints = $(gpg --list-keys --with-fingerprint --with-colon) -split "`n" `
     | Where-Object { $_ -match 'fpr:::::::::' } | ForEach-Object {$_.Split(':')[9]}
 
+#$keyFingerPrints = gpg --list-keys --with-colons | Select-String "fpr"
+
 # Delete each secret key and its corresponding public key
 foreach ($keyId in $keyFingerPrints) {
     Remove-GPGKeyPairs -keyId $keyId
 }
 
 
-function Remove-EncryptedFiles()
+function Remove-GenerateFiles()
 {
     Remove-Item -Path $directory_to_encrypt\*.sig
     Remove-Item -Path $directory_to_encrypt\*.gpg
+    Remove-Item -Path "$(Get-Location)\PublicKeys\public_key.asc" -ErrorAction SilentlyContinue
 }
 
-Remove-EncryptedFiles
+Remove-GenerateFiles
 
 
-Write-Host "✅ All public and private/secret GPG keys have been deleted."
+Write-Host "✅ All public and private/secret GPG keys have been deleted." -ForegroundColor Green
